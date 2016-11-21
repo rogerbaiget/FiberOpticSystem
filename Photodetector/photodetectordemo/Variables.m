@@ -1,0 +1,10 @@
+f = 193e12; % 1550 nm --> 193 THz
+responsivity = [ 193e12 ; 0.7]; % for InGaAs
+I_d = 0;
+K = 0.4; % for InGaAs
+M = 1;
+Rl = 50; % Ohm
+T = 690; % K
+Fa = 3;
+Ts = 1e-11; % sampling time in seconds
+Tb = 100e-11; % duration of the bits in seconds
