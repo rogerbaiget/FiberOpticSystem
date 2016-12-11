@@ -1,3 +1,4 @@
+
 function [ i, sig, SNR, BERmin] = photodetector(E, h, f, responsivity, Tb, Ts, I_d, K, M, Rl, T, Fa, bitsequence, async)
 
 

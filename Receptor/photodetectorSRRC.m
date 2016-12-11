@@ -1,17 +1,13 @@
-function [ i, sig, SNR, BERmin] = photodetector(E, h, f, responsivity, Tb, Ts, I_d, K, M, Rl, T, Fa, bitsequence, async)
+
+function [ i, sig, SNR, BERmin] = photodetectorSRRC(P, h, f, responsivity, Tb, Ts, I_d, K, M, Rl, T, Fa, bitsequence, async)
 
 
 % ------------------------------------------------------------------
 
 % Input parameters
 
-% E --> Electric field of the optical pulse coming from the optical fiber
-% in the form:
-
-% / ------Ex (magnitude)---------\
-% | ------Ex (phase)    ---------|
-% | ------Ey (magnitude)---------|
-% \ ------Ey  (phase)   ---------/
+% P --> Optical power incident in the photodetector as a function of time
+% in the form of a vector
 
 % h --> Impulse response of the detector in the tempora domain
 
@@ -49,9 +45,9 @@ function [ i, sig, SNR, BERmin] = photodetector(E, h, f, responsivity, Tb, Ts, I
 
 % Output parameters
 
-% i --> Mean value of the output current (A) as a function of time
+% i --> Mean value of the output current (A)
 
-% sig --> variance of the output current (A^2) as a function of time
+% sig --> variance of the output current (A^2)
 
 % SNR --> Signal to Noise Ratio as a function of time
 
@@ -93,19 +89,8 @@ end
 nu = planck*f*r/e; % Quantum efficiency
 
 
-% First step: obtain power from the input electric field
-E_real = sqrt(E(1,:).^2 + E(3,:).^2);
-P = abs(E_real).^2;
-
-figure (1)
-plot(P);
-title('Power signal incident in the photodetector');
-xlabel('Sample number');
-ylabel('Power (Watts)');
-
-
 % Second step: compute the mean value and deviation of the current
-% As the temporal convolutions makes our temporal window wider, we will
+% As the temporal convolutions makes oru temporal window wider, we will
 % do the convolutions in the Fourier domain and return to the temporal
 % domain
 N = length(P);
@@ -124,13 +109,14 @@ F = K*M + (1-K)*(2-1/M);
 B = (Ts/(2*e^2))*trapz(h.^2);
 
 % We can now compute the mean value and the deviation of the current
+
 i = M*(i_pin + I_d);
 sig = F*M^2*(sig + 2*e*B*I_d);
 
 % Add thermal noise
 sig = sig + 4*Kb*T*B*Fa/Rl;
 
-figure (2)
+figure (1)
 subplot(2,1,1)
 plot(i);
 xlabel('sample number (n)');
@@ -150,9 +136,7 @@ title('Current deviation (APD fotodetector)');
 % and the case when there's no asynchronies
 
 L = length(i);
-sampling_vector = D:D:L; % Ideal sampling times. We are making an 
-% assumption here: both the conformation pulse and the impulse response 
-% are generated in a way in which the ideal sampling time is Tb.
+sampling_vector = 2*D:D:L; % ideal sampling times
 
 n = 10; % Maximum value of the asynchrony (in samples)
 
@@ -167,12 +151,16 @@ if (async == 1)
    sampling_vector = sampling_vector+async;
    
 end
-
 % ----------------------------------------------------------------
 
 % Generate the eye diagram with the normal function
+% We are making an assumption here: both the conformation pulse
+% and the impulse response are generated in a way in which the ideal 
+% sampling time is Tb.
 samples = normrnd(i(sampling_vector), sqrt(sig(sampling_vector)));
-eyediagram(samples, 2);
+
+% eyediagram(samples, 2);
+
 
 % ------------------------------------------------------------------
 
@@ -180,27 +168,28 @@ eyediagram(samples, 2);
 
 SNR = ((M*i_pin).^2)./sig;
 
-figure (4)
-plot(10*log(SNR));
-title('SNR of the received signal');
-xlabel('sample number');
-ylabel('SNR(dB)');
+% figure (3)
+% plot(10*log(SNR));
+% title('SNR of the received signal');
+% xlabel('sample number');
+% ylabel('SNR(dB)');
 
 % -------------------------------------------------------------------
 
 % BER
 
+
 % Method 1 (as explained in the report)
 
 % To compute the mean and standard deviation of the zero bits, we compute
 % the mean of all the bits corresponding to 0.
-samples0 = (bitsequence==0).*(sampling_vector);
+samples0 = (bitsequence==0).*([sampling_vector 0]);
 samples0(samples0==0) = [];
 mu0 = mean(i(samples0)); 
 sig0 = sqrt(mean(sig(samples0)));
 
 % We do the same for the bits 1
-samples1 = (bitsequence==1).*(sampling_vector);
+samples1 = (bitsequence==1).*([sampling_vector 0]);
 samples1(samples1==0) = [];
 mu1 = mean(i(samples1)); 
 sig1 = sqrt(mean(sig(samples1)));
@@ -244,7 +233,7 @@ for j = 1:length(pos_thresh)
     
 end
 
-figure(5)
+figure(4)
 plot(i);
 hold on;
 plot(samples1, i(samples1), 'or');
