@@ -56,12 +56,11 @@ global general_Rs;
 global general_L;
 
 axes(handles.axes1)
-f = general_Rs*(0:(general_L/2))/general_L;
+%f = general_Rs*(0:(general_L/2))/general_L;
+w = 2*pi*general_Rs*(-(general_L/2):((general_L/2)-1))/general_L;
 y = fft(fiber_Eout);
-P2 = abs(y/general_L);
-P1 = P2(1:general_L/2+1);
-P1(2:end-1) = 2*P1(2:end-1);
-plot(f,P1);
+y = fftshift(y);
+plot(w,y);
 title('Fourier Transform');
 ylabel('|FT(E_{out}(t))|');
 xlabel('Hz')
