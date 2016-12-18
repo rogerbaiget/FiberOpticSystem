@@ -1,0 +1,12 @@
+diff a/Photodetector/photodetectordemo/photodetector.m b/Photodetector/photodetectordemo/photodetector.m	(rejected hunks)
+@@ -207,8 +207,8 @@
+ 
+ % Calculate the BER with the obtained values
+ Q = (mu1 - mu0)/(sig1+sig0);
+-BER = 0.5*erfc(Q/sqrt(2));
+-fprintf('The BER is %e \n', BER); 
++photodetector_BER = 0.5*erfc(Q/sqrt(2));
++fprintf('The BER is %e \n',photodetector_BER); 
+ 
+ 
+ % Method 2 (semianalytic model (as explained in the report))

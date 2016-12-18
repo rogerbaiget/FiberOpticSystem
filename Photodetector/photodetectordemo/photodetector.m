@@ -97,11 +97,11 @@ nu = planck*f*r/e; % Quantum efficiency
 E_real = sqrt(E(1,:).^2 + E(3,:).^2);
 P = abs(E_real).^2;
 
-figure (1)
-plot(P);
-title('Power signal incident in the photodetector');
-xlabel('Sample number');
-ylabel('Power (Watts)');
+% figure (1)
+% plot(P);
+% title('Power signal incident in the photodetector');
+% xlabel('Sample number');
+% ylabel('Power (Watts)');
 
 
 % Second step: compute the mean value and deviation of the current
@@ -130,17 +130,17 @@ photodetector_sig = F*M^2*(photodetector_sig + 2*e*B*I_d);
 % Add thermal noise
 photodetector_sig = photodetector_sig + 4*Kb*T*B*Fa/Rl;
 
-figure (2)
-subplot(2,1,1)
-plot(photodetector_i);
-xlabel('sample number (n)');
-ylabel('current (A)');
-title('Current (APD fotodetector)');
-subplot(2,1,2)
-plot(photodetector_sig);
-xlabel('sample number (n)');
-ylabel('deviation (A^2)');
-title('Current deviation (APD fotodetector)');
+% figure (2)
+% subplot(2,1,1)
+% plot(photodetector_i);
+% xlabel('sample number (n)');
+% ylabel('current (A)');
+% title('Current (APD fotodetector)');
+% subplot(2,1,2)
+% plot(photodetector_sig);
+% xlabel('sample number (n)');
+% ylabel('deviation (A^2)');
+% title('Current deviation (APD fotodetector)');
 
 % -----------------------------------------------------------------
 
@@ -180,11 +180,11 @@ eyediagram(samples, 2);
 
 photodetector_SNR = ((M*i_pin).^2)./sig;
 
-figure (4)
-plot(10*log(photodetector_SNR));
-title('SNR of the received signal');
-xlabel('sample number');
-ylabel('SNR(dB)');
+% figure (4)
+% plot(10*log(photodetector_SNR));
+% title('SNR of the received signal');
+% xlabel('sample number');
+% ylabel('SNR(dB)');
 
 % -------------------------------------------------------------------
 
@@ -208,7 +208,7 @@ sig1 = sqrt(mean(sig(samples1)));
 % Calculate the BER with the obtained values
 Q = (mu1 - mu0)/(sig1+sig0);
 photodetector_BER = 0.5*erfc(Q/sqrt(2));
-fprintf('The BER is %e \n',photodetector_BER); 
+fprintf('The BER is %e \n', photodetector_BER); 
 
 
 % Method 2 (semianalytic model (as explained in the report))
