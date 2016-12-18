@@ -20,7 +20,7 @@ alfac = 1/(2*L)*log(1/(R^2));       %cavity loss
 alfat=alfac+alfas;                  %total loss
 laser_Nth=N0+(alfat/(Gamma*a));     %threshold carrier density
 punts = Length/10;
-delta = thaur/(punts);              %time variation
+delta = thaur/punts;                %time variation
 laser_t = 0:delta:10*thaur-delta;   %time
 laser_Ith=laser_Nth*q*L*W*d/thaur;  %threshold current
 if (-1)^(length(laser_t))==1        %if length(t) (= Length) is pair

@@ -3,7 +3,7 @@ function [ dades, Eout, Eoutmod, Eoutphase, Pout, Pout_norm, ER] = mz_mod(Att_in
 
 % We choose the input polarizations, our system allows one per modulator
 switch(p)
-    case 0 %z-cut  "horitzontal"
+    case 2 %z-cut  "horitzontal"
         %Calculem dades per Einx
         Eo = abs(Einx);
         phi_Ein = phase(Einx); 
@@ -15,7 +15,7 @@ end
 
 % Modeling for a bad connection or change of medium, it attenuates the
 % signal
-Eo = (1-Att_in)*(1-Att_out)*Eo;
+Eo = (1-Att_in).*(1-Att_out)*Eo;
 
 % Step of generating the input signal, that is the information we want to
 % transmit
