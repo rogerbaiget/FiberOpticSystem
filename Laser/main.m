@@ -31,9 +31,9 @@ end
 [laser_S,laser_N]=carriersAndPhotons(v,Gamma,N0,alfat,thaur,a,laser_I,V,beta,laser_t,delta);
 laser_Pout=Obtain_Pout(laser_S,f,R,v, W, d);
 laser_Eout=Obtain_E_from_Pout(laser_Pout,fase);
-figure;plot(laser_t,laser_I,laser_t,laser_Ith*ones(1,length(laser_t)));xlabel('time (t)');ylabel('Entry Current (A)');title('I, Ith');
-figure;plot(laser_t,laser_S);xlabel('time (t)');ylabel('Foton Density');title('S');
-figure;plot(laser_t,laser_N,laser_t,laser_Nth*ones(1,length(laser_t)));xlabel('time (t)');ylabel('Carrier Density');title('N, Nth');
-figure;plot(laser_t,real(laser_Eout));xlabel('time (t)');ylabel('Real(Electric field)');title('Real(E)');
-figure;plot(imag(laser_Eout));xlabel('time (t)');ylabel('Imag(Electric field)');title('Im(E)');
+% figure;plot(laser_t,laser_I,laser_t,laser_Ith*ones(1,length(laser_t)));xlabel('time (t)');ylabel('Entry Current (A)');title('I, Ith');
+% figure;plot(laser_t,laser_S);xlabel('time (t)');ylabel('Foton Density');title('S');
+% figure;plot(laser_t,laser_N,laser_t,laser_Nth*ones(1,length(laser_t)));xlabel('time (t)');ylabel('Carrier Density');title('N, Nth');
+% figure;plot(laser_t,real(laser_Eout));xlabel('time (t)');ylabel('Real(Electric field)');title('Real(E)');
+% figure;plot(imag(laser_Eout));xlabel('time (t)');ylabel('Imag(Electric field)');title('Im(E)');
 end

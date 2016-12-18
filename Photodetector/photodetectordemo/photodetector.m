@@ -94,7 +94,8 @@ nu = planck*f*r/e; % Quantum efficiency
 
 
 % First step: obtain power from the input electric field
-E_real = sqrt(E(1,:).^2 + E(3,:).^2);
+%E_real = sqrt(E(1,:).^2 + E(3,:).^2);
+E_real = real(E);
 P = abs(E_real).^2;
 
 % figure (1)
@@ -149,7 +150,7 @@ photodetector_sig = photodetector_sig + 4*Kb*T*B*Fa/Rl;
 % we have to differenciate between the cases in which asynchronies exist
 % and the case when there's no asynchronies
 
-L = length(i);
+L = length(photodetector_i);
 sampling_vector = D:D:L; % Ideal sampling times. We are making an 
 % assumption here: both the conformation pulse and the impulse response 
 % are generated in a way in which the ideal sampling time is Tb.
@@ -171,14 +172,14 @@ end
 % ----------------------------------------------------------------
 
 % Generate the eye diagram with the normal function
-samples = normrnd(i(sampling_vector), sqrt(sig(sampling_vector)));
+samples = normrnd(photodetector_i(sampling_vector), sqrt(photodetector_sig(sampling_vector)));
 eyediagram(samples, 2);
 
 % ------------------------------------------------------------------
 
 % SNR calculation as a function of time (includes APD and PIN)
 
-photodetector_SNR = ((M*i_pin).^2)./sig;
+photodetector_SNR = ((M*i_pin).^2)./photodetector_sig;
 
 % figure (4)
 % plot(10*log(photodetector_SNR));
@@ -196,14 +197,14 @@ photodetector_SNR = ((M*i_pin).^2)./sig;
 % the mean of all the bits corresponding to 0.
 samples0 = (bitsequence==0).*(sampling_vector);
 samples0(samples0==0) = [];
-mu0 = mean(i(samples0)); 
-sig0 = sqrt(mean(sig(samples0)));
+mu0 = mean(photodetector_i(samples0)); 
+sig0 = sqrt(mean(photodetector_sig(samples0)));
 
 % We do the same for the bits 1
 samples1 = (bitsequence==1).*(sampling_vector);
 samples1(samples1==0) = [];
-mu1 = mean(i(samples1)); 
-sig1 = sqrt(mean(sig(samples1)));
+mu1 = mean(photodetector_i(samples1)); 
+sig1 = sqrt(mean(photodetector_sig(samples1)));
 
 % Calculate the BER with the obtained values
 Q = (mu1 - mu0)/(sig1+sig0);
@@ -218,8 +219,8 @@ fprintf('The BER is %e \n', photodetector_BER);
 
 % We will make a sweep between the maximum value of the '0' samples and
 % the minimum value of the '1' sample
-minthresh = max(i(samples0));
-maxthresh = min(i(samples1));
+minthresh = max(photodetector_i(samples0));
+maxthresh = min(photodetector_i(samples1));
 
 % We will try n different thresholds in the range obtained
 n = 1000;
@@ -232,8 +233,8 @@ threshold_min = 0;
 for j = 1:length(pos_thresh)
     % The BER is simply Q(d/sigma) where d is the distance between 
     % the value and the threshold
-    BER0 = qfunc((abs(i(samples0)-pos_thresh(j)))./sqrt(sig(samples0)));
-    BER1 = qfunc((abs(i(samples1)-pos_thresh(j)))./sqrt(sig(samples1)));
+    BER0 = qfunc((abs(photodetector_i(samples0)-pos_thresh(j)))./sqrt(photodetector_sig(samples0)));
+    BER1 = qfunc((abs(photodetector_i(samples1)-pos_thresh(j)))./sqrt(photodetector_sig(samples1)));
     
     BER = (mean(BER1) + mean(BER0))/2;
     
@@ -245,11 +246,11 @@ for j = 1:length(pos_thresh)
 end
 
 figure(5)
-plot(i);
+plot(photodetector_i);
 hold on;
-plot(samples1, i(samples1), 'or');
-plot(samples0, i(samples0), 'ob');
-plot(1:length(i), threshold_min*ones(1,length(i)), 'k');
+plot(samples1, photodetector_i(samples1), 'or');
+plot(samples0, photodetector_i(samples0), 'ob');
+plot(1:length(photodetector_i), threshold_min*ones(1,length(photodetector_i)), 'k');
 legend('Received signal','Sample time for 1', 'Sample time for 0', 'Optimal threshold');
 xlabel('sample time');
 ylabel('Current (A)');
