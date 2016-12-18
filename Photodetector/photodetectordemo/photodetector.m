@@ -160,12 +160,12 @@ n = 10; % Maximum value of the asynchrony (in samples)
 if (async == 1)
     
    % Intoduce a random asynchrony (that can have avalue between -n and n)
-   async = randi([-n n],1,length(sampling_vector)-1);
+   %async = randi([-n n],1,length(sampling_vector)-1);
    % To avoid problems, we will suppose that the last value never has
    % asynchrony
-   async = [async 0];
+   %async = [async 0];
    
-   sampling_vector = sampling_vector+async;
+   %sampling_vector = sampling_vector+async;
    
 end
 
@@ -195,13 +195,13 @@ photodetector_SNR = ((M*i_pin).^2)./photodetector_sig;
 % the mean of all the bits corresponding to 0.
 samples0 = (bitsequence==0).*(sampling_vector);
 samples0(samples0==0) = [];
-mu0 = mean(photodetector_i(samples0)); 
+mu0 = mean(photodetector_i(abs(samples0))); 
 sig0 = sqrt(mean(photodetector_sig(samples0)));
 
 % We do the same for the bits 1
 samples1 = (bitsequence==1).*(sampling_vector);
 samples1(samples1==0) = [];
-mu1 = mean(photodetector_i(samples1)); 
+mu1 = mean(photodetector_i(abs(samples1))); 
 sig1 = sqrt(mean(photodetector_sig(samples1)));
 
 % Calculate the BER with the obtained values

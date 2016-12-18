@@ -6,11 +6,11 @@ switch(p)
     case 2 %z-cut  "horitzontal"
         %Calculem dades per Einx
         Eo = abs(Einx);
-        phi_Ein = phase(Einx); 
+        phi_Ein = angle(Einx); 
     case 1 %xy-cut "vertical" 
         %Calculem dades per Einy
         Eo = abs(Einy);
-        phi_Ein = phase(Einy); 
+        phi_Ein = angle(Einy); 
 end
 
 % Modeling for a bad connection or change of medium, it attenuates the
@@ -78,7 +78,7 @@ ER = (1 - e_12 + sqrt_e1_e2) / (1 - e_12 - sqrt_e1_e2);
 
 % We separate the output electric field in modulus and phase
 Eoutmod = abs(Eout);
-Eoutphase = phase(Eout);
+Eoutphase = angle(Eout);
 
 % Calculate the output power
 Po = Eo.^2;
