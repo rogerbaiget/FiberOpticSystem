@@ -12,6 +12,7 @@ addpath('Menus');
 addpath('ModulatorDemo');
 addpath('Photodetector\photodetectordemo');
 %% Inputs
+
 %% General Paramenters
 global general_Rb;
 global general_N;

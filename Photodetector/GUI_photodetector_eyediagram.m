@@ -53,8 +53,8 @@ function GUI_photodetector_eyediagram_OpeningFcn(hObject, eventdata, handles, va
 % varargin   command line arguments to GUI_photodetector_eyediagram (see VARARGIN)
 
 axes(handles.axes1)
-%samples = normrnd(i(sampling_vector), sqrt(sig(sampling_vector)));
-%eyediagram(samples, 2);
+samples = normrnd(1i*(sampling_vector), sqrt(sig(sampling_vector)));
+eyediagram(samples, 2);
  % TODO: cambiar
 title('Eyediagram');
 % Choose default command line output for GUI_photodetector_eyediagram
