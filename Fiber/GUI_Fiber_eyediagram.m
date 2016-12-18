@@ -63,11 +63,19 @@ guidata(hObject, handles);
 
 
 % --- Outputs from this function are returned to the command line.
-function varargout = GUI_Fiber_eyediagram_OutputFcn(hObject, eventdata, handles) 
+function varargout = GUI_Fiber_eyediagram_OutputFcn(hObject, eventdata, handles)
 % varargout  cell array for returning output args (see VARARGOUT);
 % hObject    handle to figure
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+global fiber_Eout;
+global general_Rs;
+global general_L;
+
+axes(handles.axes1)
+eyediagram(fiber_Eout, 2);
+title('Eyediagram');
 
 % Get default command line output from handles structure
 varargout{1} = handles.output;
