@@ -1,13 +1,13 @@
-function laser_Eout = main( Length )
+function laser_Eout = main(Length)
 
-global laser_Eout;
-global laser_t;
-global laser_Pout;
-global laser_I;
-global laser_Ith;
-global laser_S;
-global laser_N;
-global laser_Nth;
+%global laser_Eout;
+%global laser_t;
+%global laser_Pout;
+%global laser_I;
+%global laser_Ith;
+%global laser_S;
+%global laser_N;
+%global laser_Nth;
 
 c=3*10^8;           %light velocity
 q=1.6*10^(-19);     %electron charge
