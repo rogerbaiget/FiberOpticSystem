@@ -1,4 +1,4 @@
-function [ i, sig, SNR, BERmin] = photodetector(E, h, f, responsivity, Tb, Ts, I_d, K, M, Rl, T, Fa, bitsequence, async)
+function [ photodetector_i, photodetector_sig, photodetector_SNR, photodetector_BER] = photodetector(E, h, f, responsivity, Tb, Ts, I_d, K, M, Rl, T, Fa, bitsequence, async)
 
 
 % ------------------------------------------------------------------
@@ -110,7 +110,7 @@ ylabel('Power (Watts)');
 % domain
 N = length(P);
 i_pin = abs((nu*Ts/(planck*f))*ifft(fft(P, N).*fft(h, N)));
-sig = abs((nu*Ts/(planck*f))*ifft(fft(P, N).*fft((h.^2), N)));
+photodetector_sig = abs((nu*Ts/(planck*f))*ifft(fft(P, N).*fft((h.^2), N)));
 
 % All what has been done above is valid for PIN photodetectors
 % ----------------------------------------------------------------
@@ -124,20 +124,20 @@ F = K*M + (1-K)*(2-1/M);
 B = (Ts/(2*e^2))*trapz(h.^2);
 
 % We can now compute the mean value and the deviation of the current
-i = M*(i_pin + I_d);
-sig = F*M^2*(sig + 2*e*B*I_d);
+photodetector_i = M*(i_pin + I_d);
+photodetector_sig = F*M^2*(photodetector_sig + 2*e*B*I_d);
 
 % Add thermal noise
-sig = sig + 4*Kb*T*B*Fa/Rl;
+photodetector_sig = photodetector_sig + 4*Kb*T*B*Fa/Rl;
 
 figure (2)
 subplot(2,1,1)
-plot(i);
+plot(photodetector_i);
 xlabel('sample number (n)');
 ylabel('current (A)');
 title('Current (APD fotodetector)');
 subplot(2,1,2)
-plot(sig);
+plot(photodetector_sig);
 xlabel('sample number (n)');
 ylabel('deviation (A^2)');
 title('Current deviation (APD fotodetector)');
@@ -178,10 +178,10 @@ eyediagram(samples, 2);
 
 % SNR calculation as a function of time (includes APD and PIN)
 
-SNR = ((M*i_pin).^2)./sig;
+photodetector_SNR = ((M*i_pin).^2)./sig;
 
 figure (4)
-plot(10*log(SNR));
+plot(10*log(photodetector_SNR));
 title('SNR of the received signal');
 xlabel('sample number');
 ylabel('SNR(dB)');
@@ -207,8 +207,8 @@ sig1 = sqrt(mean(sig(samples1)));
 
 % Calculate the BER with the obtained values
 Q = (mu1 - mu0)/(sig1+sig0);
-BER = 0.5*erfc(Q/sqrt(2));
-fprintf('The BER is %e \n', BER); 
+photodetector_BER = 0.5*erfc(Q/sqrt(2));
+fprintf('The BER is %e \n',photodetector_BER); 
 
 
 % Method 2 (semianalytic model (as explained in the report))
@@ -237,8 +237,8 @@ for j = 1:length(pos_thresh)
     
     BER = (mean(BER1) + mean(BER0))/2;
     
-    if (BER < BERmin)
-       BERmin = BER;
+    if (photodetector_BER < BERmin)
+       BERmin = photodetector_BER;
        threshold_min = pos_thresh(j);
     end
     
