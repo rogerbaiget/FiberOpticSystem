@@ -29,7 +29,7 @@ if(length(Eo)>length(dades))
     dades= interp(dades,round(length(Eo)/length(dades)));
 else
     dades= decimate(dades,round(length(dades)/length(Eo)));
-end;
+end
 
 %Un cop sabem les dades que tenim com a input escollim eñ tipus de
 %modulador Mach-Zender que volguem amb les seves característiques.

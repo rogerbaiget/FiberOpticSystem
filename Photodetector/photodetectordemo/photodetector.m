@@ -1,6 +1,6 @@
 function [ photodetector_i, photodetector_sig, photodetector_SNR, photodetector_BER] = photodetector(E, h, f, responsivity, Tb, Ts, I_d, K, M, Rl, T, Fa, bitsequence, async)
 
-
+global general_N;
 % ------------------------------------------------------------------
 
 % Input parameters
@@ -151,7 +151,7 @@ photodetector_sig = photodetector_sig + 4*Kb*T*B*Fa/Rl;
 % and the case when there's no asynchronies
 
 L = length(photodetector_i);
-sampling_vector = D:D:L; % Ideal sampling times. We are making an 
+sampling_vector = D:D:D*(2^general_N); % Ideal sampling times. We are making an 
 % assumption here: both the conformation pulse and the impulse response 
 % are generated in a way in which the ideal sampling time is Tb.
 
