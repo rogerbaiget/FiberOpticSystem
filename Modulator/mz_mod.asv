@@ -24,6 +24,12 @@ Eo = (1-Att_in).*(1-Att_out)*Eo;
 % raised cosine or a sawtooth
 % Finally, for matlab operation needs is extended to the Eo input
 [dades,p] = g_sen(tS, N);
+varaux1= log2(length(Eo));
+varaux2 = varaux1 - floor(varaux1);
+varaux3 = 2^(varaux2);
+varaux4 = varaux3*floor(varaux1);
+
+Eo=[Eo,zeros(1,2^(1-decimal)*2^(enter))
 
 if(length(Eo)>length(dades))
     dades= interp(dades,round(length(Eo)/length(dades)));
