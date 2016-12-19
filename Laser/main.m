@@ -1,5 +1,6 @@
-function laser_Eout = main(Length)
+function laser_WEout = main(Length)
 
+global laser_Eout;
 global laser_t;
 global laser_Pout;
 global laser_I;
@@ -31,6 +32,7 @@ laser_I=2*laser_Ith*ones(1,length(laser_t));
 [laser_S,laser_N]=carriersAndPhotons(v,Gamma,N0,alfat,thaur,a,laser_I,V,beta,laser_t,delta,laser_Nth,(1/(v*alfat)/(q*V))*(max(laser_I)-laser_Nth*q*L*W*d/thaur));
 laser_Pout=Obtain_Pout(laser_S,f,R,v, W, d);
 laser_Eout=Obtain_E_from_Pout(laser_Pout,fase);
+laser_WEout=E_Window(laser_Eout,t,0.3*10^(-8));
 % figure;plot(laser_t,laser_I,laser_t,laser_Ith*ones(1,length(laser_t)));xlabel('time (t)');ylabel('Entry Current (A)');title('I, Ith');
 % figure;plot(laser_t,laser_S);xlabel('time (t)');ylabel('Foton Density');title('S');
 % figure;plot(laser_t,laser_N,laser_t,laser_Nth*ones(1,length(laser_t)));xlabel('time (t)');ylabel('Carrier Density');title('N, Nth');
