@@ -99,38 +99,39 @@ function popupmenu1_Callback(hObject, eventdata, handles)
 
 % Hints: contents = cellstr(get(hObject,'String')) returns popupmenu1 contents as cell array
 %        contents{get(hObject,'Value')} returns selected item from popupmenu1
+global laser_t;
 global laser_Eout;
 global laser_Pout;
 global laser_testSequenceData;
 
 switch get(hObject,'Value')
     case 2  % Test sequence
-        axes(handles.axes4)
+        axes(handles.axes1)
         plot(laser_testSequenceData)
         xlabel('sample number (n)');
         ylabel('Test sequence (bits)');
         title('Current (PIN laser)');
     case 3  % Electric field's module
-        axes(handles.axes4)
+        axes(handles.axes1)
         plot(laser_t,abs(laser_Eout)) 
         xlabel('time (t)');
         ylabel('Electric field (N/C)');
         title('mod(Electric field) (PIN laser)');
     case 4  % Electric field's phase
-        axes(handles.axes4)
-        plot(laser_t,angle(laser_Eout)) 
+        axes(handles.axes1)
+        plot(laser_t,angle(laser_Eout).*(180/pi)) 
         xlabel('time (t)');
         ylabel('Phase (rad)');
         title('phase(Electric field) (PIN laser)');
     case 5  % Current deviation
-        axes(handles.axes4)
+        axes(handles.axes1)
         plot(laser_t,(laser_Pout)) 
         xlabel('time (t)');
         ylabel('Power (W)');
         title('Power (PIN laser)');
     case 6  % Current deviation
-        axes(handles.axes4)
-        plot(laser_t,(laser_Pout)) 
+        axes(handles.axes1)
+        plot(laser_t,(laser_Pout/max(laser_Pout))) 
         xlabel('time (t)');
         ylabel('Power (W)');
         title('Normalized Power (PIN laser)');

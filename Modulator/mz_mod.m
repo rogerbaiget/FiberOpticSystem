@@ -1,4 +1,4 @@
-function [ dades, Eout, Eoutmod, Eoutphase, Pout, Pout_norm, ER] = mz_mod(Att_in,Att_out,Vpi, Einx, Einy, e1, e2, mT, tS,N, p)
+function [ dades,p, Eout, Eoutmod, Eoutphase, Pout, Pout_norm, ER] = mz_mod(Att_in,Att_out,Vpi, Einx, Einy, e1, e2, mT, tS,N, p)
 
 
 % We choose the input polarizations, our system allows one per modulator
@@ -23,7 +23,7 @@ Eo = (1-Att_in).*(1-Att_out)*Eo;
 % Then it's convolved with an auxiliary signal, that can be chosen from a
 % raised cosine or a sawtooth
 % Finally, for matlab operation needs is extended to the Eo input
-dades = g_sen(tS, N);
+[dades,p] = g_sen(tS, N);
 dades = inter(length(Eo),length(dades),dades);
 
 %Un cop sabem les dades que tenim com a input escollim eñ tipus de
