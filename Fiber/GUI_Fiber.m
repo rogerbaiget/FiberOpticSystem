@@ -147,6 +147,8 @@ function popupmenu2_Callback(hObject, eventdata, handles)
 % Hints: contents = cellstr(get(hObject,'String')) returns popupmenu2 contents as cell array
 %        contents{get(hObject,'Value')} returns selected item from popupmenu2
 global fiber_Eout;
+global fiber_Eout2;
+
 global modulator_testSequenceData;
 
 switch get(hObject,'Value')
@@ -155,19 +157,19 @@ switch get(hObject,'Value')
         plot(modulator_testSequenceData)
         xlabel('sample number (n)');
         ylabel('Test sequence (bits)');
-        title('Current (PIN laser)');
+        title('Test sequence');
     case 3  % Electric field's module
         axes(handles.axes1)
-        plot(abs(fiber_Eout)) 
+        plot(abs(fiber_Eout2)) 
         xlabel('time (t)');
         ylabel('Electric field (N/C)');
-        title('mod(Electric field) (PIN laser)');
+        title('mod(Electric field)');
     case 4  % Electric field's phase
         axes(handles.axes1)
-        plot(angle(fiber_Eout).*(180/pi)) 
+        plot(angle(fiber_Eout2).*(180/pi)) 
         xlabel('time (t)');
         ylabel('Phase (rad)');
-        title('phase(Electric field) (PIN laser)');
+        title('phase(Electric field)');
 end
 
 % --- Executes during object creation, after setting all properties.
